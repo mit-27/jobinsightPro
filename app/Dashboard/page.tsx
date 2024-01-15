@@ -10,6 +10,8 @@ import JobCard from '../components/JobCard'
 import axios from 'axios'
 import {createClient} from '@supabase/supabase-js'
 import { v4 as uuidv4 } from "uuid";
+import type { Metadata } from 'next'
+
 
 
 const dashboard = () => {
@@ -21,20 +23,20 @@ const dashboard = () => {
     const [fetchingJobs,setFetchingJobs] = useState(false)
 
     const [jobs,setJobs] = useState([
-        {
-            title:'Software Developer',
-            company:'Firefox',
-            location:'Mumbai',
-            apply_link:'https://in.linkedin.com/jobs/view/sde-2-backend-at-jar-3775457542?refId=T7FW6F6I9ghjlP5EbPuHCQ%3D%3D&trackingId=IOf6gBljEIGop9oxYliLLQ%3D%3D&position=8&pageNum=0&trk=public_jobs_jserp-result_search-card',
-            insight:{"Matched_Skills": ["Python", "Java", "Go"], "Missing_Skills": ["SprintBoot"], "Percentage_Matched": 70}
-        },
-        {
-            title:'Junior Software Engineer',
-            company:'Candy',
-            location:'New Delhi',
-            apply_link:'https://in.linkedin.com/jobs/view/sde-2-backend-at-jar-3775457542?refId=T7FW6F6I9ghjlP5EbPuHCQ%3D%3D&trackingId=IOf6gBljEIGop9oxYliLLQ%3D%3D&position=8&pageNum=0&trk=public_jobs_jserp-result_search-card',
-            insight:{"Matched_Skills": ["JavaScript", "C#", "HTML", "SharePoint Development", "OOPS"], "Missing_Skills": ["C", "Triggers", "AJAX", "Database", "SharePoint Server"], "Percentage_Matched": 50}
-        }
+        // {
+        //     title:'Software Developer',
+        //     company:'Firefox',
+        //     location:'Mumbai',
+        //     apply_link:'https://in.linkedin.com/jobs/view/sde-2-backend-at-jar-3775457542?refId=T7FW6F6I9ghjlP5EbPuHCQ%3D%3D&trackingId=IOf6gBljEIGop9oxYliLLQ%3D%3D&position=8&pageNum=0&trk=public_jobs_jserp-result_search-card',
+        //     insight:{"Matched_Skills": ["Python", "Java", "Go"], "Missing_Skills": ["SprintBoot"], "Percentage_Matched": 70}
+        // },
+        // {
+        //     title:'Junior Software Engineer',
+        //     company:'Candy',
+        //     location:'New Delhi',
+        //     apply_link:'https://in.linkedin.com/jobs/view/sde-2-backend-at-jar-3775457542?refId=T7FW6F6I9ghjlP5EbPuHCQ%3D%3D&trackingId=IOf6gBljEIGop9oxYliLLQ%3D%3D&position=8&pageNum=0&trk=public_jobs_jserp-result_search-card',
+        //     insight:{"Matched_Skills": ["JavaScript", "C#", "HTML", "SharePoint Development", "OOPS"], "Missing_Skills": ["C", "Triggers", "AJAX", "Database", "SharePoint Server"], "Percentage_Matched": 50}
+        // }
     ])
 
     const handlefileChange = (event : any) => {

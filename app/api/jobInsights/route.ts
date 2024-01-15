@@ -73,7 +73,7 @@ export const POST = async (req: Request, res: NextResponse) => {
         // Combining the model and table
         const combineQuery = `SELECT input.title,input.company,input.location,input.apply_link,input.job_description, output.answer
         FROM supabase_datasource.mainTB AS input
-        JOIN mysql_temp.jobmodel AS output where input.resume_link="57848462-ba8d-4885-92e9-261680dd118b"
+        JOIN mysql_temp.jobmodel AS output where input.resume_link="${user_id}"
         LIMIT 10`;
 
         const combineQueryResult = await MindsDB.SQL.runQuery(combineQuery);
