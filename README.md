@@ -1,36 +1,87 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+### Job Insight Pro - Project developed for MindsDB Hackathon
+---
+It is an application designed to streamline the job search process. Job Insight Pro not only fetches relevant job listings but also provides valuable insights. These insights include a breakdown of missing and matching skills, as well as the percentage of alignment between the job profile and the user's resume.
 
-## Getting Started
+### How to set it up
 
-First, run the development server:
+- Clone the repository
+- Go to repository project and run given command (If your device does not have nodejs then install it first)
+    ```yarn```
+- Create the `env.local` file and assign given environment variables
+    ```
+    NEXT_PUBLIC_SUPABASE_URL=<Supabase URL>
+    NEXT_PUBLIC_SUPABASE_KEY=<Supabase Secret Key>
+    NEXT_PUBLIC_MINDSDB_USER=<Mindsdb User Email>
+    NEXT_PUBLIC_MINDSDB_PASSWORD=<MindsDB Password>
+    ```
+- Execute given SQL queries on MindsDB
+    ```
+    CREATE DATABASE my_web WITH ENGINE = 'web';
+    
+    CREATE DATABASE supabase_datasource WITH ENGINE = 'supabase',PARAMETERS = {
+  "host": "<host URL>", "port":5432,                                     --- port used to make TCP/IP connection
+  "database": "postgres",                              --- database name
+  "user": "<User Name>",                                  --- database user
+  "password": "<Password of Supabase>"                             --- database password
+    };
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+    CREATE ML_ENGINE openai_engine
+    FROM openai
+    USING
+        api_key = '<OpenAI API Key>';
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+    CREATE MODEL mindsdb.ResumeInsight
+    PREDICT response
+    USING
+        engine = 'openai_engine',
+        prompt_template = 'Give me the skills from given Resume which I could compare with Job Description
+        Resume
+        "{{resume_text}}"';
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+    CREATE MODEL mindsdb.cover_letter_model
+    PREDICT response
+    USING
+        max_tokens = 1000,
+        engine = 'openai_engine',
+        prompt_template = 'I want you to work as a Cover Letter Guidance Expert. Based on provided Resume and job description generate me the cover letter within 500 words.
+        
+        Resume
+        "{{resume_text}}"
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+        Job Description
+        "{{job_description}}"
+        
+        ';
 
-## Learn More
+        CREATE MODEL JobModel
+        PREDICT answer
+        USING
+            engine = 'openai_engine',
+            prompt_template = 'Using the resume and job description below, give me the matched skills, missing skiils based on resume and job description and percentage that how much resume match with job description. 
 
-To learn more about Next.js, take a look at the following resources:
+        Take the output and put in below format
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+        Format:
+        {
+        "Matched_Skills":[],
+        "Missing_Skills":[],
+        "Percentage_Matched":
+        }
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+            Resume:
+            Mit Suthar
+            Skills - Typescript, Javascript, mongodb
+        
+            Job Description:
+            "{{job_description}}"';
 
-## Deploy on Vercel
+    ```
+- Now you can run the project
+    `yarn run dev`
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Tech Stack
+- NextJS
+- Supabase
+- MindsDB
+- Shadcn UI
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
