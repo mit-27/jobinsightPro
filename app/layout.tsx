@@ -3,7 +3,7 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { ThemeProvider } from './components/theme-provider'
 import Navbar from './components/Navbar'
-
+import Head from 'next/head'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
@@ -18,6 +18,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+            <Head>
+        <meta property="og:title" content="Job Insight Pro" key="title" />
+      </Head>
+
       <body className={inter.className}>
         
       <ThemeProvider
