@@ -2,6 +2,8 @@
 ---
 It is an application designed to streamline the job search process. Job Insight Pro not only fetches relevant job listings but also provides valuable insights. These insights include a breakdown of missing and matching skills, as well as the percentage of alignment between the job profile and the user's resume.
 
+### Demo - [Watch Now](https://youtu.be/pluDWdDFLr0?si=ynb7dS9yEl9m1RY_)
+
 ### How to set it up
 
 - Clone the repository
